@@ -33,8 +33,8 @@ public class AddUserServlet extends HttpServlet {
         out.println("  <label for='lastName'>Etternavn:</label>");
         out.println("  <input type='text' name='lastName'/>");
         out.println("<br>");
-        out.println("  <label for='userName'>Brukernavn:</label>");
-        out.println("  <input type='text' name='userName'/>");
+        out.println("  <label for='userEmail'>E-post:</label>");
+        out.println("  <input type='text' name='userEmail'/>");
         out.println("<br>");
         out.println("  <label for='password'>Passord:</label>");
         out.println("  <input type='password' name='password'/>");
@@ -50,14 +50,8 @@ public class AddUserServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        UserModel user = new UserModel(request.getParameter("firstName"),request.getParameter("lastName"),request.getParameter("userName"),
+        UserModel user = new UserModel(request.getParameter("firstName"),request.getParameter("lastName"),request.getParameter("userEmail"),
                 request.getParameter("password"),request.getParameter("dob"));
-        System.out.println(user.getFirstName());
-        System.out.println(user.getLastName());
-        System.out.println(user.getUserName());
-        System.out.println(user.getPassword());
-        System.out.println(user.getDob());
-
         try {
             PrintWriter out = response.getWriter();
             writeUserToDb(user,out);
@@ -72,7 +66,7 @@ public class AddUserServlet extends HttpServlet {
             PreparedStatement statement = db.prepareStatement(insertUserCommand);
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
-            statement.setString(3, user.getUserName());
+            statement.setString(3, user.getUserEmail());
             statement.setString(4, user.getPassword());
             statement.setString(5, user.getDob());
 
